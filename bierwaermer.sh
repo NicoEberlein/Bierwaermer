@@ -9,16 +9,6 @@ FAN_PIN=28
 FUR_PIN=25
 LED_PIN=29
 
-gpio mode $FAN_PIN out
-gpio mode $FUR_PIN out
-gpio mode $LED_PIN out
-
-#default values
-gpio write $FAN_PIN 1
-gpio write $FUR_PIN 1
-gpio write $LED_PIN 0
-
-
 activate_fan() {
 
 	if [ "$FAN" = "false" ]
@@ -63,12 +53,24 @@ deactivate_fan() {
 
 if [ "$#" -ne "2" ]
 then
-	echo "Usage: ./$0 <BOTTOM_TRESH> <TOP_TRESH>"
+	echo "Usage: $0 <BOTTOM_TRESH> <TOP_TRESH>"
 	exit 1
 else
 	echo "Starting $0 with following parameters:"
 	echo -e "    TOP_TRESHOLD:\t$TOP_TRESH °C"
-	echo -e "    BOTTOM_TRESHHOLD:\t$BOTTOM_TRESH °C"
+	echo -e "    BOTTOM_TRESHOLD:\t$BOTTOM_TRESH °C"
+
+
+	gpio mode $FAN_PIN out
+	gpio mode $FUR_PIN out
+	gpio mode $LED_PIN out
+
+	#default values
+	gpio write $FAN_PIN 1
+	gpio write $FUR_PIN 1
+	gpio write $LED_PIN 0
+
+
 fi
 
 
@@ -80,6 +82,7 @@ do
 
 	DATE="$(date +%d/%m/%Y-%H:%M)"
 	echo "$DATE - $TEMP °C"
+	echo "$DATE;$TEMP" >> templog
 
 	if [ "$TEMP" -lt "$BOTTOM_TRESH" ]
 	then
