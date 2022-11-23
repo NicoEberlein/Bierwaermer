@@ -4,6 +4,7 @@ FAN=false
 
 BOTTOM_TRESH=$1
 TOP_TRESH=$2
+INTERVAL=$3
 
 FAN_PIN=28
 FUR_PIN=25
@@ -51,14 +52,15 @@ deactivate_fan() {
 }
 
 
-if [ "$#" -ne "2" ]
+if [ "$#" -ne "3" ]
 then
-	echo "Usage: $0 <BOTTOM_TRESH> <TOP_TRESH>"
+	echo "Usage: $0 <BOTTOM_TRESH> <TOP_TRESH> <INTERVAL>"
 	exit 1
 else
 	echo "Starting $0 with following parameters:"
-	echo -e "    TOP_TRESHOLD:\t$TOP_TRESH °C"
-	echo -e "    BOTTOM_TRESHOLD:\t$BOTTOM_TRESH °C"
+	echo -e "    TOP_TRESHOLD:                $TOP_TRESH     °C      "
+	echo -e "    BOTTOM_TRESHOLD:             $BOTTOM_TRESH  °C      "
+	echo -e "    Interval temp measurement:   $INTERVAL       seconds"
 
 
 	gpio mode $FAN_PIN out
@@ -92,7 +94,7 @@ do
 		deactivate_fan
 	fi
 
-	sleep 60
+	sleep $INTERVAL
 done
 
 
