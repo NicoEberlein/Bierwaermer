@@ -72,7 +72,7 @@ else
 fi
 
 
-while [ "1" -eq "1" ]
+while true
 do
 	BIGTEMP="$(cat /sys/bus/w1/devices/28-04166375daff/w1_slave | tail -n 1 | grep -o -E '[^=]*$')"
 	div=1000
