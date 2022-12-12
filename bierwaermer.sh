@@ -84,7 +84,7 @@ do
 
 	DATE="$(date +%d/%m/%Y-%H:%M)"
 	echo "$DATE - $TEMP °C"
-	echo "$DATE;$TEMP" >> templog
+	echo "$DATE;$TEMP" >> /home/pi/templog_auto
 
 	if [ "$TEMP" -lt "$BOTTOM_TRESH" ]
 	then
